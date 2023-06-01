@@ -1,4 +1,5 @@
 import com.google.protobuf.gradle.id
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.8.21"
@@ -8,8 +9,9 @@ plugins {
 group = "org.example"
 version = "1.0-SNAPSHOT"
 
-repositories {
-    mavenCentral()
+java {
+    sourceCompatibility = JavaVersion.VERSION_19
+    targetCompatibility = JavaVersion.VERSION_19
 }
 
 dependencies {
@@ -39,12 +41,15 @@ dependencies {
 //    testImplementation("io.projectreactor:reactor-test")
 }
 
-tasks.test {
-    useJUnitPlatform()
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = "19"
+    }
 }
 
-kotlin {
-    jvmToolchain(19)
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
 
 protobuf {
