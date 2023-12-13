@@ -1,0 +1,12 @@
+grpc:
+  server:
+    port: 9090
+    security:
+      enabled: false
+  client:
+    client1:
+      address: self:self
+      negotiationType: PLAINTEXT
+    client2:
+      address: self:self
+      negotiationType: PLAINTEXT

@@ -20,14 +20,16 @@ dependencies {
 //    val reactorGrpcVersion = "1.2.4"
     val grpcKotlinVersion = "1.4.1"
 
-    implementation("com.google.protobuf:protobuf-java:$protobufVersion")
-    implementation("com.google.protobuf:protobuf-java-util:$protobufVersion")
-    implementation("com.google.protobuf:protobuf-kotlin:$protobufVersion")
+    api("com.google.protobuf:protobuf-java:$protobufVersion")
+    api("com.google.protobuf:protobuf-java-util:$protobufVersion")
+    api("com.google.protobuf:protobuf-kotlin:$protobufVersion")
 
-    implementation("io.grpc:grpc-protobuf:$grpcVersion")
-    implementation("io.grpc:grpc-stub:$grpcVersion")
-    implementation("io.grpc:grpc-netty-shaded:$grpcVersion")
-    implementation("io.grpc:grpc-kotlin-stub:$grpcKotlinVersion")
+    api("io.grpc:grpc-inprocess:$grpcVersion")
+    api("io.grpc:grpc-kotlin-stub:$grpcKotlinVersion")
+    api("io.grpc:grpc-netty-shaded:$grpcVersion")
+    api("io.grpc:grpc-protobuf:$grpcVersion")
+    api("io.grpc:grpc-services:$grpcVersion")
+    api("io.grpc:grpc-stub:$grpcVersion")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
 
