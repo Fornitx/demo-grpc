@@ -4,9 +4,7 @@ import foo.bar.Greeter1GrpcKt
 import foo.bar.Greeter2GrpcKt
 import foo.bar.helloRequest
 import io.github.oshai.kotlinlogging.KotlinLogging
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import net.devh.boot.grpc.client.inject.GrpcClient
 import org.junit.jupiter.api.Test
