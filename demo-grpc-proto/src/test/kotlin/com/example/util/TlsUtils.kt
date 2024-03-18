@@ -6,10 +6,6 @@ import java.security.KeyStore
 import javax.net.ssl.KeyManagerFactory
 import javax.net.ssl.TrustManagerFactory
 
-const val MSG1 = "123"
-const val MSG2 = "Abc"
-const val MSG3 = "Foo"
-
 private val password = "password".toCharArray()
 
 fun serverCredentials(secure: Boolean): ServerCredentials = if (secure) {

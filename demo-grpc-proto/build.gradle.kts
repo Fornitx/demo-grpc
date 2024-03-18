@@ -11,7 +11,7 @@ plugins {
 
 val protobufVersion = "3.25.1"
 val grpcVersion = "1.60.0"
-//    val reactorGrpcVersion = "1.2.4"
+val reactorGrpcVersion = "1.2.4"
 val grpcKotlinVersion = "1.4.1"
 
 java {
@@ -37,12 +37,12 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8")
 
 //    implementation(platform("io.projectreactor:reactor-bom:2022.0.7"))
-//    implementation("io.projectreactor:reactor-core")
-//    implementation("com.salesforce.servicelibs:reactor-grpc-stub:$reactorGrpcVersion")
+    implementation("io.projectreactor:reactor-core")
+    implementation("com.salesforce.servicelibs:reactor-grpc-stub:$reactorGrpcVersion")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
-//    testImplementation("io.projectreactor:reactor-test")
+    testImplementation("io.projectreactor:reactor-test")
 
     testImplementation("org.mockito:mockito-core")
     testImplementation("org.mockito:mockito-junit-jupiter")
@@ -66,14 +66,14 @@ protobuf {
     plugins {
         id("grpc") { artifact = "io.grpc:protoc-gen-grpc-java:$grpcVersion" }
         id("grpckt") { artifact = "io.grpc:protoc-gen-grpc-kotlin:$grpcKotlinVersion:jdk8@jar" }
-//        id("reactor") { artifact = "com.salesforce.servicelibs:reactor-grpc:$reactorGrpcVersion" }
+        id("reactor") { artifact = "com.salesforce.servicelibs:reactor-grpc:$reactorGrpcVersion" }
     }
     generateProtoTasks {
         ofSourceSet("main").forEach {
             it.plugins {
                 id("grpc")
                 id("grpckt")
-//                id("reactor")
+                id("reactor")
             }
             it.builtins {
                 id("kotlin")

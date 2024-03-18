@@ -87,5 +87,3 @@ private class ServerImpl(private val service: ServerService) : Greeter1Grpc.Gree
         responseObserver.onCompleted()
     }
 }
-
-

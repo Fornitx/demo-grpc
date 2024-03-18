@@ -34,9 +34,9 @@ class StreamingKotlinTest {
         val stub = Greeter2GrpcKt.Greeter2CoroutineStub(ClientInterceptors.intercept(channel, HeaderClientInterceptor()))
         runBlocking {
             stub.sayHello(flow {
-                emit(helloRequest { msg = "Abc" })
-                emit(helloRequest { msg = "Xyz" })
-                emit(helloRequest { msg = "Klm" })
+                emit(helloRequest { msg = MSG1 })
+                emit(helloRequest { msg = MSG2 })
+                emit(helloRequest { msg = MSG3 })
             }).collect { reply ->
                 println("ClientCoroutineStub.sayHello $reply".trim() + " thread: ${Thread.currentThread()}")
                 clientService.call(reply.msg)
@@ -44,15 +44,15 @@ class StreamingKotlinTest {
         }
 
         val serverInOrder = inOrder(serverService)
-        serverInOrder.verify(serverService, timeout(5000)).call("Abc")
-        serverInOrder.verify(serverService, timeout(5000)).call("Xyz")
-        serverInOrder.verify(serverService, timeout(5000)).call("Klm")
+        serverInOrder.verify(serverService, timeout(5000)).call(MSG1)
+        serverInOrder.verify(serverService, timeout(5000)).call(MSG2)
+        serverInOrder.verify(serverService, timeout(5000)).call(MSG3)
         serverInOrder.verifyNoMoreInteractions()
 
         val clientInOrder = inOrder(clientService)
-        clientInOrder.verify(clientService, timeout(5000)).call("Abc".repeat(3))
-        clientInOrder.verify(clientService, timeout(5000)).call("Xyz".repeat(3))
-        clientInOrder.verify(clientService, timeout(5000)).call("Klm".repeat(3))
+        clientInOrder.verify(clientService, timeout(5000)).call(MSG1.repeat(3))
+        clientInOrder.verify(clientService, timeout(5000)).call(MSG2.repeat(3))
+        clientInOrder.verify(clientService, timeout(5000)).call(MSG3.repeat(3))
         clientInOrder.verifyNoMoreInteractions()
 
         server.shutdown()

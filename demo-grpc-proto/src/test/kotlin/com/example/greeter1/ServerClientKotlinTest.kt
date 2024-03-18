@@ -32,14 +32,14 @@ class ServerClientKotlinTest {
         val channel = Grpc.newChannelBuilder("localhost:$PORT", clientCredentials(false)).build()
         val stub = Greeter1GrpcKt.Greeter1CoroutineStub(ClientInterceptors.intercept(channel, HeaderClientInterceptor()))
         runBlocking {
-            val reply = stub.sayHello(helloRequest { msg = "Abc" })
+            val reply = stub.sayHello(helloRequest { msg = MSG1 })
             println("ClientCoroutineStub.sayHello $reply".trim() + " thread: ${Thread.currentThread()}")
             clientService.call(reply.msg)
         }
 
-        verify(serverService, timeout(5000)).call("Abc")
+        verify(serverService, timeout(5000)).call(MSG1)
 
-        verify(clientService, timeout(5000)).call("Abc".repeat(3))
+        verify(clientService, timeout(5000)).call(MSG1.repeat(3))
 
         verifyNoMoreInteractions(serverService, clientService)
 
