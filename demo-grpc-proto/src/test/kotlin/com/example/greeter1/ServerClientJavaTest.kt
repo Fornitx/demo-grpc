@@ -1,14 +1,12 @@
 package com.example.greeter1
 
-import com.example.util.ClientService
-import com.example.util.ServerService
-import com.example.util.credentials
-import com.example.util.findFreePort
+import com.example.util.*
 import foo.bar.Greeter.HelloReply
 import foo.bar.Greeter.HelloRequest
 import foo.bar.Greeter1Grpc
+import io.grpc.ClientInterceptors
 import io.grpc.Grpc
-import io.grpc.InsecureServerCredentials
+import io.grpc.ServerInterceptors
 import io.grpc.stub.StreamObserver
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
@@ -22,26 +20,26 @@ class ServerClientJavaTest {
     @Test
     fun test() {
         val serverService = mock<ServerService>()
-        val server = Grpc.newServerBuilderForPort(PORT, InsecureServerCredentials.create())
-            .addService(ServerImpl(serverService))
+        val server = Grpc.newServerBuilderForPort(PORT, serverCredentials(false))
+            .addService(ServerInterceptors.intercept(ServerImpl(serverService), HeaderServerInterceptor()))
             .build()
             .start()
         println("Server started on port: $PORT")
 
         val clientService1 = mock<ClientService>()
         Thread.startVirtualThread {
-            val channel = Grpc.newChannelBuilder("localhost:$PORT", credentials(false)).build()
-            val stub = Greeter1Grpc.newBlockingStub(channel)
-            val reply = stub.sayHello(HelloRequest.newBuilder().setMsg("Abc").build())
+            val channel = Grpc.newChannelBuilder("localhost:$PORT", clientCredentials(false)).build()
+            val stub = Greeter1Grpc.newBlockingStub(ClientInterceptors.intercept(channel, HeaderClientInterceptor()))
+            val reply = stub.sayHello(HelloRequest.newBuilder().setMsg(MSG1).build())
             println("newBlockingStub.sayHello $reply".trim() + " thread: ${Thread.currentThread()}")
             clientService1.call(reply.msg)
         }
 
         val clientService2 = mock<ClientService>()
         Thread.startVirtualThread {
-            val channel = Grpc.newChannelBuilder("localhost:$PORT", credentials(false)).build()
-            val stub = Greeter1Grpc.newStub(channel)
-            stub.sayHello(HelloRequest.newBuilder().setMsg("Xyz").build(),
+            val channel = Grpc.newChannelBuilder("localhost:$PORT", clientCredentials(false)).build()
+            val stub = Greeter1Grpc.newStub(ClientInterceptors.intercept(channel, HeaderClientInterceptor()))
+            stub.sayHello(HelloRequest.newBuilder().setMsg(MSG2).build(),
                 object : StreamObserver<HelloReply> {
                     override fun onNext(reply: HelloReply) {
                         println("newStub.sayHello $reply".trim() + " thread: ${Thread.currentThread()}")
@@ -55,20 +53,20 @@ class ServerClientJavaTest {
 
         val clientService3 = mock<ClientService>()
         Thread.startVirtualThread {
-            val channel = Grpc.newChannelBuilder("localhost:$PORT", credentials(false)).build()
-            val stub = Greeter1Grpc.newFutureStub(channel)
-            val reply = stub.sayHello(HelloRequest.newBuilder().setMsg("Klm").build()).get()
+            val channel = Grpc.newChannelBuilder("localhost:$PORT", clientCredentials(false)).build()
+            val stub = Greeter1Grpc.newFutureStub(ClientInterceptors.intercept(channel, HeaderClientInterceptor()))
+            val reply = stub.sayHello(HelloRequest.newBuilder().setMsg(MSG3).build()).get()
             println("newFutureStub.sayHello $reply".trim() + " thread: ${Thread.currentThread()}")
             clientService3.call(reply.msg)
         }
 
-        verify(serverService, timeout(5000)).call("Abc")
-        verify(serverService, timeout(5000)).call("Xyz")
-        verify(serverService, timeout(5000)).call("Klm")
+        verify(serverService, timeout(5000)).call(MSG1)
+        verify(serverService, timeout(5000)).call(MSG2)
+        verify(serverService, timeout(5000)).call(MSG3)
 
-        verify(clientService1, timeout(5000)).call("Abc".repeat(3))
-        verify(clientService2, timeout(5000)).call("Xyz".repeat(3))
-        verify(clientService3, timeout(5000)).call("Klm".repeat(3))
+        verify(clientService1, timeout(5000)).call(MSG1.repeat(3))
+        verify(clientService2, timeout(5000)).call(MSG2.repeat(3))
+        verify(clientService3, timeout(5000)).call(MSG3.repeat(3))
 
         verifyNoMoreInteractions(serverService, clientService1, clientService2, clientService3)
 

@@ -1,14 +1,12 @@
 package com.example.greeter2
 
-import com.example.util.ClientService
-import com.example.util.ServerService
-import com.example.util.credentials
-import com.example.util.findFreePort
+import com.example.util.*
 import foo.bar.Greeter.HelloReply
 import foo.bar.Greeter.HelloRequest
 import foo.bar.Greeter2Grpc
+import io.grpc.ClientInterceptors
 import io.grpc.Grpc
-import io.grpc.InsecureServerCredentials
+import io.grpc.ServerInterceptors
 import io.grpc.stub.StreamObserver
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.inOrder
@@ -21,15 +19,15 @@ class StreamingJavaTest {
     @Test
     fun test() {
         val serverService = mock<ServerService>()
-        val server = Grpc.newServerBuilderForPort(PORT, InsecureServerCredentials.create())
-            .addService(ServerImpl(serverService))
+        val server = Grpc.newServerBuilderForPort(PORT, serverCredentials(false))
+            .addService(ServerInterceptors.intercept(ServerImpl(serverService), HeaderServerInterceptor()))
             .build()
             .start()
         println("Server started on port: $PORT")
 
         val clientService = mock<ClientService>()
-        val channel = Grpc.newChannelBuilder("localhost:$PORT", credentials(false)).build()
-        val stub = Greeter2Grpc.newStub(channel)
+        val channel = Grpc.newChannelBuilder("localhost:$PORT", clientCredentials(false)).build()
+        val stub = Greeter2Grpc.newStub(ClientInterceptors.intercept(channel, HeaderClientInterceptor()))
         val requestObserver = stub.sayHello(
             object : StreamObserver<HelloReply> {
                 override fun onNext(reply: HelloReply) {

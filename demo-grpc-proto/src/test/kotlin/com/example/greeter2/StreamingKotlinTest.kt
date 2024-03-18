@@ -1,16 +1,14 @@
 package com.example.greeter2
 
-import com.example.util.ClientService
-import com.example.util.ServerService
-import com.example.util.credentials
-import com.example.util.findFreePort
+import com.example.util.*
 import foo.bar.Greeter.HelloReply
 import foo.bar.Greeter.HelloRequest
 import foo.bar.Greeter2GrpcKt
 import foo.bar.helloReply
 import foo.bar.helloRequest
+import io.grpc.ClientInterceptors
 import io.grpc.Grpc
-import io.grpc.InsecureServerCredentials
+import io.grpc.ServerInterceptors
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
@@ -25,15 +23,15 @@ class StreamingKotlinTest {
     @Test
     fun test() {
         val serverService = mock<ServerService>()
-        val server = Grpc.newServerBuilderForPort(PORT, InsecureServerCredentials.create())
-            .addService(ServerCoroutineImpl(serverService))
+        val server = Grpc.newServerBuilderForPort(PORT, serverCredentials(false))
+            .addService(ServerInterceptors.intercept(ServerCoroutineImpl(serverService), HeaderServerInterceptor()))
             .build()
             .start()
         println("Server started on port: $PORT")
 
         val clientService = mock<ClientService>()
-        val channel = Grpc.newChannelBuilder("localhost:$PORT", credentials(false)).build()
-        val stub = Greeter2GrpcKt.Greeter2CoroutineStub(channel)
+        val channel = Grpc.newChannelBuilder("localhost:$PORT", clientCredentials(false)).build()
+        val stub = Greeter2GrpcKt.Greeter2CoroutineStub(ClientInterceptors.intercept(channel, HeaderClientInterceptor()))
         runBlocking {
             stub.sayHello(flow {
                 emit(helloRequest { msg = "Abc" })
