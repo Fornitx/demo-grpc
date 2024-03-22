@@ -39,7 +39,6 @@ tasks.withType<Test> {
 }
 
 protobuf {
-    version
     protoc { artifact = "com.google.protobuf:protoc:$protobufVersion" }
     plugins {
         id("grpc") { artifact = "io.grpc:protoc-gen-grpc-java:$grpcVersion" }
