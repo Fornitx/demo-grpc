@@ -2,10 +2,8 @@ plugins {
     `java-library`
 }
 
-val protobufVersion = "3.25.1"
-val grpcVersion = "1.60.0"
-val reactorGrpcVersion = "1.2.4"
-//val grpcKotlinVersion = "1.4.1"
+val grpcVersion: String by project
+val guavaVersion: String by project
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
@@ -14,6 +12,7 @@ java {
 
 dependencies {
     api("io.grpc:grpc-api:$grpcVersion")
+    api("com.google.guava:guava:$guavaVersion")
 }
 
 tasks.test {
