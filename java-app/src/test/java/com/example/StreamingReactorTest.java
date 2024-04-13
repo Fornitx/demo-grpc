@@ -2,6 +2,7 @@ package com.example;
 
 import com.example.interceptors.HeaderClientInterceptor;
 import com.example.interceptors.HeaderServerInterceptor;
+import com.example.interceptors.Headers;
 import com.example.services.ClientService;
 import com.example.services.ServerService;
 import foo.bar.Greeter.HelloReply;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import static com.example.utils.LoggingUtils.log;
 import static com.example.utils.NetUtils.findFreePort;
 import static com.example.utils.TestUtils.MSG1;
 import static com.example.utils.TestUtils.MSG2;
@@ -43,7 +45,7 @@ class StreamingReactorTest {
             .map(msg -> HelloRequest.newBuilder().setMsg(msg).build())
             .as(stub::sayHello)
             .doOnNext(reply -> {
-                System.out.printf("[%s] newReactorStub.sayHello %s", Thread.currentThread(), reply);
+                log("newReactorStub.sayHello %s", reply);
                 clientService.call(reply.getMsg());
             })
             .subscribe();
@@ -74,7 +76,8 @@ class StreamingReactorTest {
         @Override
         public Flux<HelloReply> sayHello(Flux<HelloRequest> requests) {
             return requests.flatMap(request -> {
-                System.out.printf("[%s] ServerReactorImpl.onNext %s", Thread.currentThread(), request);
+                var requestId = Headers.REQUEST_ID_CTX_KEY.get();
+                log("[%s] ServerReactorImpl.onNext %s", requestId, request);
                 service.call(request.getMsg());
                 var reply = HelloReply.newBuilder().setMsg(request.getMsg().repeat(3)).build();
                 return Mono.just(reply);

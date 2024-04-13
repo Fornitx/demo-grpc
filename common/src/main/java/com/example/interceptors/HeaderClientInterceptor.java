@@ -7,14 +7,13 @@ import io.grpc.ClientInterceptor;
 import io.grpc.ForwardingClientCall.SimpleForwardingClientCall;
 import io.grpc.ForwardingClientCallListener.SimpleForwardingClientCallListener;
 import io.grpc.Metadata;
-import io.grpc.Metadata.Key;
 import io.grpc.MethodDescriptor;
 
 import java.util.UUID;
 
-public class HeaderClientInterceptor implements ClientInterceptor {
-    private static final Key<String> KEY = Key.of("request_id", Metadata.ASCII_STRING_MARSHALLER);
+import static com.example.utils.LoggingUtils.log;
 
+public class HeaderClientInterceptor implements ClientInterceptor {
     @Override
     public <ReqT, RespT> ClientCall<ReqT, RespT> interceptCall(
         MethodDescriptor<ReqT, RespT> method,
@@ -24,13 +23,11 @@ public class HeaderClientInterceptor implements ClientInterceptor {
         return new SimpleForwardingClientCall<>(next.newCall(method, callOptions)) {
             @Override
             public void start(Listener<RespT> responseListener, Metadata headers) {
-                headers.put(KEY, UUID.randomUUID().toString());
+                headers.put(Headers.REQUEST_ID_KEY, UUID.randomUUID().toString());
                 super.start(new SimpleForwardingClientCallListener<>(responseListener) {
                     @Override
                     public void onHeaders(Metadata responseHeaders) {
-                        System.out.printf("[%s] headers received from server: %s%n",
-                            Thread.currentThread(),
-                            responseHeaders);
+                        log("headers received from server: %s%n", responseHeaders);
                         super.onHeaders(responseHeaders);
                     }
                 }, headers);

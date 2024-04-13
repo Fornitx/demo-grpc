@@ -2,10 +2,14 @@ package com.example
 
 import com.example.interceptors.HeaderClientInterceptor
 import com.example.interceptors.HeaderServerInterceptor
+import com.example.interceptors.Headers
 import com.example.services.ClientService
 import com.example.services.ServerService
+import com.example.utils.LoggingUtils.log
 import com.example.utils.NetUtils.findFreePort
-import com.example.utils.TestUtils.*
+import com.example.utils.TestUtils.MSG1
+import com.example.utils.TestUtils.MSG2
+import com.example.utils.TestUtils.MSG3
 import com.example.utils.TlsUtils.clientCredentials
 import com.example.utils.TlsUtils.serverCredentials
 import foo.bar.Greeter.HelloReply
@@ -46,7 +50,7 @@ class StreamingKotlinTest {
                 emit(helloRequest { msg = MSG2 })
                 emit(helloRequest { msg = MSG3 })
             }).collect { reply ->
-                print("[${Thread.currentThread()}] ClientCoroutineStub.sayHello $reply")
+                log("ClientCoroutineStub.sayHello %s", reply)
                 clientService.call(reply.msg)
             }
         }
@@ -74,7 +78,8 @@ private class ServerCoroutineImpl(
     override fun sayHello(requests: Flow<HelloRequest>): Flow<HelloReply> {
         return flow {
             requests.collect { request ->
-                print("[${Thread.currentThread()}] ServerCoroutineImpl.sayHello $request")
+                val requestId = Headers.REQUEST_ID_CTX_KEY.get()
+                log("[%s] ServerCoroutineImpl.sayHello %s", requestId, request)
                 serverService.call(request.msg)
                 emit(helloReply { msg = request.msg.repeat(3) })
             }

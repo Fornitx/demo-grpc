@@ -2,6 +2,7 @@ package com.example;
 
 import com.example.interceptors.HeaderClientInterceptor;
 import com.example.interceptors.HeaderServerInterceptor;
+import com.example.interceptors.Headers;
 import com.example.services.ClientService;
 import com.example.services.ServerService;
 import foo.bar.Greeter.HelloReply;
@@ -13,6 +14,7 @@ import io.grpc.ServerInterceptors;
 import io.grpc.stub.StreamObserver;
 import org.junit.jupiter.api.Test;
 
+import static com.example.utils.LoggingUtils.log;
 import static com.example.utils.NetUtils.findFreePort;
 import static com.example.utils.TestUtils.MSG1;
 import static com.example.utils.TestUtils.MSG2;
@@ -42,18 +44,18 @@ class StreamingJavaTest {
             new StreamObserver<>() {
                 @Override
                 public void onNext(HelloReply reply) {
-                    System.out.printf("[%s] newStub.sayHello %s", Thread.currentThread(), reply);
+                    log("newStub.sayHello %s", reply);
                     clientService.call(reply.getMsg());
                 }
 
                 @Override
                 public void onError(Throwable throwable) {
-                    System.out.printf("[%s] newStub.onError %s", Thread.currentThread(), throwable.getMessage());
+                    log("newStub.onError %s", throwable.getMessage());
                 }
 
                 @Override
                 public void onCompleted() {
-                    System.out.printf("[%s] newStub.onCompleted", Thread.currentThread());
+                    log("newStub.onCompleted");
                 }
             }
         );
@@ -91,7 +93,8 @@ class StreamingJavaTest {
             return new StreamObserver<>() {
                 @Override
                 public void onNext(HelloRequest request) {
-                    System.out.printf("[%s] ServerImpl.onNext %s", Thread.currentThread(), request);
+                    String requestId = Headers.REQUEST_ID_CTX_KEY.get();
+                    log("[%s] ServerImpl.onNext %s", requestId, request);
                     service.call(request.getMsg());
                     var reply = HelloReply.newBuilder().setMsg(request.getMsg().repeat(3)).build();
                     responseObserver.onNext(reply);
@@ -99,13 +102,13 @@ class StreamingJavaTest {
 
                 @Override
                 public void onError(Throwable throwable) {
-                    System.out.printf("[%s] ServerImpl.onError %s%n", Thread.currentThread(), throwable.getMessage());
+                    log("ServerImpl.onError %s%n", throwable.getMessage());
                     responseObserver.onError(throwable);
                 }
 
                 @Override
                 public void onCompleted() {
-                    System.out.printf("[%s] ServerImpl.onCompleted", Thread.currentThread());
+                    log("ServerImpl.onCompleted");
                     responseObserver.onCompleted();
                 }
             };

@@ -2,6 +2,7 @@ package com.example;
 
 import com.example.interceptors.HeaderClientInterceptor;
 import com.example.interceptors.HeaderServerInterceptor;
+import com.example.interceptors.Headers;
 import com.example.services.ClientService;
 import com.example.services.ServerService;
 import foo.bar.Greeter.HelloReply;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.ExecutionException;
 
+import static com.example.utils.LoggingUtils.log;
 import static com.example.utils.NetUtils.findFreePort;
 import static com.example.utils.TestUtils.MSG1;
 import static com.example.utils.TestUtils.MSG2;
@@ -45,7 +47,7 @@ class ServerClientJavaTest {
             var stub = Greeter1Grpc.newBlockingStub(ClientInterceptors.intercept(channel,
                 new HeaderClientInterceptor()));
             var reply = stub.sayHello(HelloRequest.newBuilder().setMsg(MSG1).build());
-            System.out.printf("[%s] newBlockingStub.sayHello %s", Thread.currentThread(), reply);
+            log("newBlockingStub.sayHello %s", reply);
             clientService1.call(reply.getMsg());
         });
 
@@ -57,7 +59,7 @@ class ServerClientJavaTest {
                 new StreamObserver<>() {
                     @Override
                     public void onNext(HelloReply reply) {
-                        System.out.printf("[%s] newStub.sayHello %s", Thread.currentThread(), reply);
+                        log("newStub.sayHello %s", reply);
                         clientService2.call(reply.getMsg());
                     }
 
@@ -81,7 +83,7 @@ class ServerClientJavaTest {
             } catch (InterruptedException | ExecutionException e) {
                 throw new RuntimeException(e);
             }
-            System.out.printf("[%s] newFutureStub.sayHello %s", Thread.currentThread(), reply);
+            log("newFutureStub.sayHello %s", reply);
             clientService3.call(reply.getMsg());
         });
 
@@ -116,7 +118,8 @@ class ServerClientJavaTest {
 
         @Override
         public void sayHello(HelloRequest request, StreamObserver<HelloReply> responseObserver) {
-            System.out.printf("[%s] ServerImpl.sayHello %s", Thread.currentThread(), request);
+            String requestId = Headers.REQUEST_ID_CTX_KEY.get();
+            log("[%s] ServerImpl.sayHello %s", requestId, request);
             service.call(request.getMsg());
             var reply = HelloReply.newBuilder().setMsg(request.getMsg().repeat(3)).build();
             responseObserver.onNext(reply);

@@ -2,8 +2,10 @@ package com.example.com.example
 
 import com.example.interceptors.HeaderClientInterceptor
 import com.example.interceptors.HeaderServerInterceptor
+import com.example.interceptors.Headers
 import com.example.services.ClientService
 import com.example.services.ServerService
+import com.example.utils.LoggingUtils.log
 import com.example.utils.NetUtils.findFreePort
 import com.example.utils.TestUtils.MSG1
 import com.example.utils.TlsUtils.clientCredentials
@@ -41,7 +43,7 @@ class ServerClientKotlinTest {
         val stub = Greeter1GrpcKt.Greeter1CoroutineStub(ClientInterceptors.intercept(channel, HeaderClientInterceptor()))
         GlobalScope.launch {
             val reply = stub.sayHello(helloRequest { msg = MSG1 })
-            print("[${Thread.currentThread()}] ClientCoroutineStub.sayHello $reply")
+            log("ClientCoroutineStub.sayHello %s", reply)
             clientService.call(reply.msg)
         }
 
@@ -58,7 +60,8 @@ class ServerClientKotlinTest {
 
 private class ServerCoroutineImpl(private val service: ServerService) : Greeter1GrpcKt.Greeter1CoroutineImplBase() {
     override suspend fun sayHello(request: HelloRequest): HelloReply {
-        print("[${Thread.currentThread()}] ServerCoroutineImpl.sayHello $request")
+        val requestId = Headers.REQUEST_ID_CTX_KEY.get()
+        log("[%s] ServerCoroutineImpl.sayHello %s", requestId, request)
         service.call(request.msg)
         return helloReply { msg = request.msg.repeat(3) }
     }

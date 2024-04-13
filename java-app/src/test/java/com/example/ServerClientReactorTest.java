@@ -2,6 +2,7 @@ package com.example;
 
 import com.example.interceptors.HeaderClientInterceptor;
 import com.example.interceptors.HeaderServerInterceptor;
+import com.example.interceptors.Headers;
 import com.example.services.ClientService;
 import com.example.services.ServerService;
 import foo.bar.Greeter.HelloReply;
@@ -13,6 +14,7 @@ import io.grpc.ServerInterceptors;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
 
+import static com.example.utils.LoggingUtils.log;
 import static com.example.utils.NetUtils.findFreePort;
 import static com.example.utils.TestUtils.MSG1;
 import static com.example.utils.TlsUtils.clientCredentials;
@@ -39,7 +41,7 @@ class ServerClientReactorTest {
         var stub = ReactorGreeter1Grpc.newReactorStub(ClientInterceptors.intercept(channel, new HeaderClientInterceptor()));
         stub.sayHello(HelloRequest.newBuilder().setMsg(MSG1).build())
             .doOnNext(reply -> {
-                System.out.printf("[%s] newReactorStub.sayHello %s", Thread.currentThread(), reply);
+                log("newReactorStub.sayHello %s", reply);
                 clientService.call(reply.getMsg());
             }).subscribe();
 
@@ -63,7 +65,8 @@ class ServerClientReactorTest {
         @Override
         public Mono<HelloReply> sayHello(HelloRequest request) {
             return Mono.fromRunnable(() -> {
-                System.out.printf("[%s] ServerReactorImpl.sayHello %s", Thread.currentThread(), request);
+                String requestId = Headers.REQUEST_ID_CTX_KEY.get();
+                log("[%s] ServerReactorImpl.sayHello %s", requestId, request);
                 service.call(request.getMsg());
             }).then(Mono.defer(() -> {
                 var reply = HelloReply.newBuilder().setMsg(request.getMsg().repeat(3)).build();
