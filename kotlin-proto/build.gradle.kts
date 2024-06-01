@@ -32,7 +32,7 @@ dependencies {
 
     api("com.google.guava:guava:$guavaVersion")
 
-    api("org.jetbrains.kotlinx:kotlinx-coroutines-core")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:" + System.getProperty("kotlin_coroutines_version"))
 
     testImplementation("org.jetbrains.kotlin:kotlin-test")
 }
