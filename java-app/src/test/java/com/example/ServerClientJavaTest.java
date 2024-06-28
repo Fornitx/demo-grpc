@@ -118,7 +118,7 @@ class ServerClientJavaTest {
 
         @Override
         public void sayHello(HelloRequest request, StreamObserver<HelloReply> responseObserver) {
-            String requestId = Headers.REQUEST_ID_CTX_KEY.get();
+            var requestId = Headers.REQUEST_ID_CTX_KEY.get();
             log("[%s] ServerImpl.sayHello %s", requestId, request);
             service.call(request.getMsg());
             var reply = HelloReply.newBuilder().setMsg(request.getMsg().repeat(3)).build();

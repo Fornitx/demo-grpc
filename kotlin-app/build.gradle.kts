@@ -12,7 +12,7 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":kotlin-proto"))
 
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.3.1")
 }
 
@@ -22,6 +22,6 @@ kotlin {
     }
 }
 
-tasks.test {
+tasks.withType<Test> {
     useJUnitPlatform()
 }

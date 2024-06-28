@@ -30,11 +30,7 @@ dependencies {
     api("io.grpc:grpc-services:$grpcVersion")
     api("io.grpc:grpc-stub:$grpcVersion")
 
-    api("com.google.guava:guava:$guavaVersion")
-
     api("org.jetbrains.kotlinx:kotlinx-coroutines-core:" + System.getProperty("kotlin_coroutines_version"))
-
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
 }
 
 kotlin {
@@ -43,7 +39,7 @@ kotlin {
     }
 }
 
-tasks.test {
+tasks.withType<Test> {
     useJUnitPlatform()
 }
 

@@ -6,8 +6,9 @@ val grpcVersion: String by project
 val guavaVersion: String by project
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 
 dependencies {
@@ -15,6 +16,6 @@ dependencies {
     api("com.google.guava:guava:$guavaVersion")
 }
 
-tasks.test {
+tasks.withType<Test> {
     useJUnitPlatform()
 }

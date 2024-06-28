@@ -16,6 +16,6 @@ dependencies {
     testImplementation("org.mockito:mockito-core")
 }
 
-tasks.test {
+tasks.withType<Test> {
     useJUnitPlatform()
 }
