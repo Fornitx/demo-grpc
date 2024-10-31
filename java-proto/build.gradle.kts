@@ -17,7 +17,7 @@ java {
 }
 
 dependencies {
-    api(platform("org.springframework.boot:spring-boot-dependencies:" + System.getProperty("spring_version")))
+    api(platform("org.springframework.boot:spring-boot-dependencies:" + System.getProperty("spring.version")))
 
     api("com.google.protobuf:protobuf-javalite:$protobufVersion")
     api("com.google.protobuf:protobuf-java:$protobufVersion")

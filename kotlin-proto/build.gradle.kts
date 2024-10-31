@@ -17,7 +17,7 @@ java {
 }
 
 dependencies {
-    api(platform("org.springframework.boot:spring-boot-dependencies:" + System.getProperty("spring_version")))
+    api(platform("org.springframework.boot:spring-boot-dependencies:" + System.getProperty("spring.version")))
 
     api("com.google.protobuf:protobuf-kotlin:$protobufVersion")
     api("com.google.protobuf:protobuf-java:$protobufVersion")
@@ -30,7 +30,7 @@ dependencies {
     api("io.grpc:grpc-services:$grpcVersion")
     api("io.grpc:grpc-stub:$grpcVersion")
 
-    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:" + System.getProperty("kotlin_coroutines_version"))
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:" + System.getProperty("kotlin.coroutines.version"))
 }
 
 kotlin {
