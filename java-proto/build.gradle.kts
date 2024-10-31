@@ -1,49 +1,28 @@
 import com.google.protobuf.gradle.id
 
 plugins {
+    id("buildlogic.java-common-conventions")
     `java-library`
-    id("com.google.protobuf")
-}
-
-val protobufVersion: String by project
-val grpcVersion: String by project
-val reactorGrpcVersion: String by project
-val guavaVersion: String by project
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
+    alias(libs.plugins.protobuf.gradle.plugin)
 }
 
 dependencies {
     api(platform("org.springframework.boot:spring-boot-dependencies:" + System.getProperty("spring.version")))
 
-    api("com.google.protobuf:protobuf-javalite:$protobufVersion")
-    api("com.google.protobuf:protobuf-java:$protobufVersion")
-    api("com.google.protobuf:protobuf-java-util:$protobufVersion")
+    api(libs.protobuf.java)
 
-    api("io.grpc:grpc-inprocess:$grpcVersion")
-    api("io.grpc:grpc-netty-shaded:$grpcVersion")
-    api("io.grpc:grpc-protobuf:$grpcVersion")
-    api("io.grpc:grpc-services:$grpcVersion")
-    api("io.grpc:grpc-stub:$grpcVersion")
+    api(libs.grpc.protobuf)
+    api(libs.grpc.stub)
 
-    api("com.google.guava:guava:$guavaVersion")
-
-    api("io.projectreactor:reactor-core")
-    api("com.salesforce.servicelibs:reactor-grpc-stub:$reactorGrpcVersion")
-}
-
-tasks.withType<Test> {
-    useJUnitPlatform()
+    api(libs.reactor.core)
+    api(libs.grpc.reactor.stub)
 }
 
 protobuf {
-    protoc { artifact = "com.google.protobuf:protoc:$protobufVersion" }
+    protoc { artifact = libs.protobuf.protoc.get().toString() }
     plugins {
-        id("grpc") { artifact = "io.grpc:protoc-gen-grpc-java:$grpcVersion" }
-        id("reactor") { artifact = "com.salesforce.servicelibs:reactor-grpc:$reactorGrpcVersion" }
+        id("grpc") { artifact = libs.grpc.protoc.gen.java.get().toString() }
+        id("reactor") { artifact = libs.grpc.reactor.plugin.get().toString() }
     }
     generateProtoTasks {
         ofSourceSet("main").forEach {

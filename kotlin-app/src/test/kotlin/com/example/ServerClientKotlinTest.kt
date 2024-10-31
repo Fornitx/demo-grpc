@@ -1,4 +1,4 @@
-package com.example.com.example
+package com.example
 
 import com.example.interceptors.HeaderClientInterceptor
 import com.example.interceptors.HeaderServerInterceptor
@@ -33,7 +33,7 @@ class ServerClientKotlinTest {
     fun test() {
         val serverService = mock<ServerService>()
         val server = Grpc.newServerBuilderForPort(PORT, serverCredentials(false))
-            .addService(ServerInterceptors.intercept(ServerCoroutineImpl(serverService), HeaderServerInterceptor()))
+            .addService(ServerInterceptors.intercept(ServerCoroutineImpl1(serverService), HeaderServerInterceptor()))
             .build()
             .start()
         println("Server started on port: $PORT")
@@ -58,7 +58,7 @@ class ServerClientKotlinTest {
     }
 }
 
-private class ServerCoroutineImpl(private val service: ServerService) : Greeter1GrpcKt.Greeter1CoroutineImplBase() {
+private class ServerCoroutineImpl1(private val service: ServerService) : Greeter1GrpcKt.Greeter1CoroutineImplBase() {
     override suspend fun sayHello(request: HelloRequest): HelloReply {
         val requestId = Headers.REQUEST_ID_CTX_KEY.get()
         log("[%s] ServerCoroutineImpl.sayHello %s", requestId, request)

@@ -36,7 +36,7 @@ class StreamingKotlinTest {
     fun test() {
         val serverService = mock<ServerService>()
         val server = Grpc.newServerBuilderForPort(PORT, serverCredentials(false))
-            .addService(ServerInterceptors.intercept(ServerCoroutineImpl(serverService), HeaderServerInterceptor()))
+            .addService(ServerInterceptors.intercept(ServerCoroutineImpl2(serverService), HeaderServerInterceptor()))
             .build()
             .start()
         println("Server started on port: $PORT")
@@ -72,7 +72,7 @@ class StreamingKotlinTest {
     }
 }
 
-private class ServerCoroutineImpl(
+private class ServerCoroutineImpl2(
     private val serverService: ServerService
 ) : Greeter2GrpcKt.Greeter2CoroutineImplBase() {
     override fun sayHello(requests: Flow<HelloRequest>): Flow<HelloReply> {
@@ -86,4 +86,3 @@ private class ServerCoroutineImpl(
         }
     }
 }
-

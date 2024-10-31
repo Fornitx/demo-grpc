@@ -1,21 +1,12 @@
 plugins {
-    id("java")
-}
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
+    id("buildlogic.java-common-conventions")
 }
 
 dependencies {
     implementation(project(":common"))
     implementation(project(":java-proto"))
 
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("org.mockito:mockito-core")
-}
+    implementation(libs.grpc.netty.shaded)
 
-tasks.withType<Test> {
-    useJUnitPlatform()
+    testImplementation("org.mockito:mockito-core")
 }
