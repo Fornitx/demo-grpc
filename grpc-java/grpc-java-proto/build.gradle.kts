@@ -14,7 +14,7 @@ dependencies {
     api(libs.grpc.stub)
     api(libs.grpc.protobuf)
 
-    api(platform("org.springframework.boot:spring-boot-dependencies:" + System.getProperty("spring.version")))
+    api(platform(libs.spring.bom))
     api(libs.reactor.core)
     api(libs.grpc.reactor.stub)
 }

@@ -4,6 +4,8 @@ dependencies {
 
     implementation(libs.grpc.netty.shaded)
 
-    testImplementation("org.mockito:mockito-core")
+    testImplementation(platform(libs.spring.bom))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.mockito:mockito-junit-jupiter")
     testImplementation(libs.mockito.kotlin)
 }

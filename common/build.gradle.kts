@@ -12,7 +12,3 @@ dependencies {
     api(platform(libs.grpc.bom))
     api(libs.grpc.api)
 }
-
-tasks.test {
-    useJUnitPlatform()
-}

@@ -7,6 +7,7 @@ plugins {
 
 dependencies {
     api(platform(libs.protobuf.bom))
+    api(libs.protobuf.java)
     api(libs.protobuf.kotlin)
 
     api(platform(libs.grpc.bom))
