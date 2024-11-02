@@ -11,11 +11,6 @@ subprojects {
         }
     }
 
-    dependencies {
-        implementation(rootProject.libs.kotlin.reflect)
-        testImplementation(rootProject.libs.kotlin.test.junit5)
-    }
-
     kotlin {
         compilerOptions {
             freeCompilerArgs.addAll("-Xjsr305=strict")
