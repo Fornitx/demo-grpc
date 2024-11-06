@@ -18,8 +18,9 @@ import com.example.utils.TlsUtils.serverCredentials
 import io.grpc.ClientInterceptors
 import io.grpc.Grpc
 import io.grpc.ServerInterceptors
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.timeout
@@ -30,7 +31,7 @@ private val PORT = findFreePort()
 
 class ServerClientKotlinTest {
     @Test
-    fun test() {
+    fun test() = runTest {
         val serverService = mock<ServerService>()
         val server = Grpc.newServerBuilderForPort(PORT, serverCredentials(false))
             .addService(ServerInterceptors.intercept(ServerCoroutineImpl1(serverService), HeaderServerInterceptor()))
@@ -40,8 +41,10 @@ class ServerClientKotlinTest {
 
         val clientService = mock<ClientService>()
         val channel = Grpc.newChannelBuilder("localhost:$PORT", clientCredentials(false)).build()
-        val stub = Greeter1GrpcKt.Greeter1CoroutineStub(ClientInterceptors.intercept(channel, HeaderClientInterceptor()))
-        GlobalScope.launch {
+        val stub =
+            Greeter1GrpcKt.Greeter1CoroutineStub(ClientInterceptors.intercept(channel, HeaderClientInterceptor()))
+
+        launch(Dispatchers.IO) {
             val reply = stub.sayHello(helloRequest { msg = MSG1 })
             log("ClientCoroutineStub.sayHello %s", reply)
             clientService.call(reply.msg)
@@ -61,7 +64,7 @@ class ServerClientKotlinTest {
 private class ServerCoroutineImpl1(private val service: ServerService) : Greeter1GrpcKt.Greeter1CoroutineImplBase() {
     override suspend fun sayHello(request: HelloRequest): HelloReply {
         val requestId = Headers.REQUEST_ID_CTX_KEY.get()
-        log("[%s] ServerCoroutineImpl.sayHello %s", requestId, request)
+        log("[%s] ServerCoroutineImpl1.sayHello %s", requestId, request)
         service.call(request.msg)
         return helloReply { msg = request.msg.repeat(3) }
     }

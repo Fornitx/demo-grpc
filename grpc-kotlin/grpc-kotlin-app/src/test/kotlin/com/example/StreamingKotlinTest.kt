@@ -20,10 +20,11 @@ import com.example.utils.TlsUtils.serverCredentials
 import io.grpc.ClientInterceptors
 import io.grpc.Grpc
 import io.grpc.ServerInterceptors
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.inOrder
 import org.mockito.kotlin.mock
@@ -33,7 +34,7 @@ private val PORT = findFreePort()
 
 class StreamingKotlinTest {
     @Test
-    fun test() {
+    fun test() = runTest {
         val serverService = mock<ServerService>()
         val server = Grpc.newServerBuilderForPort(PORT, serverCredentials(false))
             .addService(ServerInterceptors.intercept(ServerCoroutineImpl2(serverService), HeaderServerInterceptor()))
@@ -43,8 +44,10 @@ class StreamingKotlinTest {
 
         val clientService = mock<ClientService>()
         val channel = Grpc.newChannelBuilder("localhost:$PORT", clientCredentials(false)).build()
-        val stub = Greeter2GrpcKt.Greeter2CoroutineStub(ClientInterceptors.intercept(channel, HeaderClientInterceptor()))
-        GlobalScope.launch {
+        val stub =
+            Greeter2GrpcKt.Greeter2CoroutineStub(ClientInterceptors.intercept(channel, HeaderClientInterceptor()))
+
+        launch(Dispatchers.IO) {
             stub.sayHello(flow {
                 emit(helloRequest { msg = MSG1 })
                 emit(helloRequest { msg = MSG2 })
@@ -75,14 +78,12 @@ class StreamingKotlinTest {
 private class ServerCoroutineImpl2(
     private val serverService: ServerService
 ) : Greeter2GrpcKt.Greeter2CoroutineImplBase() {
-    override fun sayHello(requests: Flow<HelloRequest>): Flow<HelloReply> {
-        return flow {
-            requests.collect { request ->
-                val requestId = Headers.REQUEST_ID_CTX_KEY.get()
-                log("[%s] ServerCoroutineImpl.sayHello %s", requestId, request)
-                serverService.call(request.msg)
-                emit(helloReply { msg = request.msg.repeat(3) })
-            }
+    override fun sayHello(requests: Flow<HelloRequest>): Flow<HelloReply> = flow {
+        requests.collect { request ->
+            val requestId = Headers.REQUEST_ID_CTX_KEY.get()
+            log("[%s] ServerCoroutineImpl2.sayHello %s", requestId, request)
+            serverService.call(request.msg)
+            emit(helloReply { msg = request.msg.repeat(3) })
         }
     }
 }

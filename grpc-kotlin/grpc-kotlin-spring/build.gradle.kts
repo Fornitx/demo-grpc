@@ -21,7 +21,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
     testImplementation(rootProject.libs.kotlin.test.junit5)
-    implementation(rootProject.libs.kotlinx.coroutines.test)
+    testImplementation(rootProject.libs.kotlinx.coroutines.test)
 }
 
 tasks.jar {
