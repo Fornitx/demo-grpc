@@ -16,7 +16,7 @@ dependencyResolutionManagement {
             version("kotlin", System.getProperty("kotlin.version"))
             version("kotlin-coroutines", System.getProperty("kotlin.coroutines.version"))
             version("kotlin-logging", System.getProperty("kotlin.logging.version"))
-            version("spring-boot", System.getProperty("spring.version"))
+            version("spring-boot", System.getProperty("spring.boot.version"))
             version("spring-dm", System.getProperty("spring.dm.version"))
         }
     }

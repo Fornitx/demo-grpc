@@ -25,4 +25,4 @@ jobs:
     - uses: gradle/actions/setup-gradle@v3
 
     - name: Gradle test
-      run: gradle test --show-version --no-daemon -Dkotlin.version=2.0.21 -Dkotlin.logging.version=7.0.0 -Dspring.version=3.3.5 -Dspring.dm.version=1.1.6 -Dkotlin.coroutines.version=1.9.0
+      run: gradle test --show-version --no-daemon -Dkotlin.version=2.0.21 -Dkotlin.logging.version=7.0.0 -Dspring.boot.version=3.3.5 -Dspring.dm.version=1.1.6 -Dkotlin.coroutines.version=1.9.0
