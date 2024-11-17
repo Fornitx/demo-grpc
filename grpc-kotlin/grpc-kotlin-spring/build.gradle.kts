@@ -10,8 +10,8 @@ ext["junit-jupiter.version"] = libs.versions.junit.jupiter.get()
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
 
-    implementation(rootProject.libs.kotlin.reflect)
-    implementation(rootProject.libs.kotlinx.coroutines.core)
+    implementation(libs.kotlin.reflect)
+    implementation(libs.kotlinx.coroutines.core)
 
     implementation("net.devh:grpc-server-spring-boot-starter:3.1.0.RELEASE")
 
@@ -20,8 +20,8 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
-    testImplementation(rootProject.libs.kotlin.test.junit5)
-    testImplementation(rootProject.libs.kotlinx.coroutines.test)
+    testImplementation(libs.kotlin.test.junit5)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
 
 tasks.jar {
