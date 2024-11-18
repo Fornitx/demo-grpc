@@ -11,6 +11,7 @@ jobs:
   test:
 
     runs-on: ubuntu-latest
+    container: redhat/ubi8:latest
     permissions:
       contents: read
 
