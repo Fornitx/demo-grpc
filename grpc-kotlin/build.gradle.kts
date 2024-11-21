@@ -11,6 +11,12 @@ subprojects {
         }
     }
 
+    dependencies {
+        constraints {
+            implementation("org.jetbrains.kotlin:kotlin-reflect:" + rootProject.libs.versions.kotlin.lang.get())
+        }
+    }
+
     kotlin {
         compilerOptions {
             freeCompilerArgs.addAll("-Xjsr305=strict")

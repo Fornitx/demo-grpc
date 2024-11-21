@@ -4,6 +4,8 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":grpc-kotlin:grpc-kotlin-proto"))
 
+    implementation(libs.kotlin.reflect)
+
     testImplementation(libs.kotlinx.coroutines.test)
 
     testImplementation(platform(libs.junit.bom))

@@ -5,7 +5,7 @@
 #spring-dm = "1.1.6"
 
 guava = "33.3.1-jre"
-mockito-kotlin = "5.3.1" # "5.4.0" requires mockito-core "5.12.0"
+mockito-kotlin = "5.4.0"
 junit-jupiter = "5.11.3"
 
 protobuf = "4.28.3"
@@ -52,8 +52,8 @@ grpc-reactor-plugin = { module = "com.salesforce.servicelibs:reactor-grpc", vers
 grpc-reactor-stub = { module = "com.salesforce.servicelibs:reactor-grpc-stub", version.ref = "grpcReactor" }
 
 [plugins]
-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-lang" }
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin-lang" }
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 spring-dm = { id = "io.spring.dependency-management", version.ref = "spring-dm" }
 protobuf = { id = "com.google.protobuf", version = "0.9.4" }

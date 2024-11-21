@@ -15,17 +15,17 @@ jobs:
       contents: read
 
     steps:
-    - uses: actions/checkout@v4
-    
-    - uses: actions/setup-java@v4
-      with:
-        distribution: temurin
-        java-version: 21
-        
-    - uses: gradle/actions/setup-gradle@v3
+      - uses: actions/checkout@v4
 
-    - name: Print glibc version
-      run: ldd --version
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
 
-    - name: Gradle test
-      run: gradle test --show-version --no-daemon -Pkotlin.version=2.0.21 -Pkotlin-logging.version=7.0.0 -Pspring-boot.version=3.3.5 -Pspring-dm.version=1.1.6 -Pkotlin-coroutines.version=1.9.0
+      - uses: gradle/actions/setup-gradle@v3
+
+      - name: Print glibc version
+        run: ldd --version
+
+      - name: Gradle test
+        run: gradle test --show-version --no-daemon -Pkotlin-lang.version=2.0.21 -Pkotlin-logging.version=7.0.0 -Pspring-boot.version=3.4.0 -Pspring-dm.version=1.1.6 -Pkotlin-coroutines.version=1.9.0

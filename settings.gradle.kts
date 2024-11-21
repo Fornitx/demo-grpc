@@ -7,7 +7,7 @@ dependencyResolutionManagement {
         create("libs") {
             from(files("gradle/custom.libs.versions.toml"))
 
-            version("kotlin", providers.gradleProperty("kotlin.version").get())
+            version("kotlin-lang", providers.gradleProperty("kotlin-lang.version").get())
             version("kotlin-coroutines", providers.gradleProperty("kotlin-coroutines.version").get())
             version("kotlin-logging", providers.gradleProperty("kotlin-logging.version").get())
             version("spring-boot", providers.gradleProperty("spring-boot.version").get())
