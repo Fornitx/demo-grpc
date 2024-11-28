@@ -5,7 +5,6 @@ plugins {
 }
 
 ext["kotlin-coroutines.version"] = libs.versions.kotlin.coroutines.get()
-ext["junit-jupiter.version"] = libs.versions.junit.jupiter.get()
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
@@ -13,7 +12,7 @@ dependencies {
     implementation(libs.kotlin.reflect)
     implementation(libs.kotlinx.coroutines.core)
 
-    implementation("net.devh:grpc-server-spring-boot-starter:3.1.0.RELEASE")
+    implementation(libs.grpc.spring.server)
 
     implementation(project(":common"))
     implementation(project(":grpc-kotlin:grpc-kotlin-proto"))

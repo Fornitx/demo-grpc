@@ -1,5 +1,5 @@
 [versions]
-#kotlin = "2.1.0"
+#kotlin-lang = "2.1.0"
 #kotlin-coroutines = "1.9.0"
 #spring-boot = "3.4.0"
 #spring-dm = "1.1.6"
@@ -11,6 +11,7 @@ protobuf = "4.29.0"
 grpc = "1.68.1"
 grpcReactor = "1.2.4"
 grpcKotlin = "1.4.1"
+grpcSpring = "3.1.0.RELEASE"
 
 [libraries]
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect" }
@@ -44,6 +45,8 @@ grpc-kotlin-stub = { module = "io.grpc:grpc-kotlin-stub", version.ref = "grpcKot
 grpc-reactor-plugin = { module = "com.salesforce.servicelibs:reactor-grpc", version.ref = "grpcReactor" }
 # TODO depends on "javax.annotation:javax.annotation-api"
 grpc-reactor-stub = { module = "com.salesforce.servicelibs:reactor-grpc-stub", version.ref = "grpcReactor" }
+
+grpc-spring-server = { module = "net.devh:grpc-server-spring-boot-starter", version.ref = "grpcSpring" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-lang" }
