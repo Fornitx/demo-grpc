@@ -16,7 +16,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "demo-grpc2"
+rootProject.name = "demo-grpc"
 
 include("common")
 include("grpc-java", "grpc-java:grpc-java-proto", "grpc-java:grpc-java-app")
