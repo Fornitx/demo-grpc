@@ -5,8 +5,6 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         create("libs") {
-            from(files("gradle/custom.libs.versions.toml"))
-
             version("kotlin-lang", providers.gradleProperty("kotlin-lang.version").get())
             version("kotlin-coroutines", providers.gradleProperty("kotlin-coroutines.version").get())
             version("kotlin-logging", providers.gradleProperty("kotlin-logging.version").get())
