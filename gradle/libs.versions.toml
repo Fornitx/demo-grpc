@@ -4,7 +4,6 @@
 #spring-boot = "3.4.0"
 #spring-dm = "1.1.6"
 
-guava = "33.4.0-jre"
 mockito-kotlin = "5.4.0"
 
 protobuf = "4.29.3"
@@ -24,7 +23,7 @@ kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-t
 spring-bom = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
 reactor-core = { module = "io.projectreactor:reactor-core" }
 
-guava = { module = "com.google.guava:guava", version.ref = "guava" }
+guava = { module = "com.google.guava:guava" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
 
 protobuf-bom = { module = "com.google.protobuf:protobuf-bom", version.ref = "protobuf" }

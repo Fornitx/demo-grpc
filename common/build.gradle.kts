@@ -9,7 +9,9 @@ java {
 }
 
 dependencies {
+    api(platform(libs.spring.bom))
+    api(libs.guava)
+
     api(platform(libs.grpc.bom))
     api(libs.grpc.api)
-    api(libs.guava)
 }

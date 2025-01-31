@@ -15,6 +15,8 @@ dependencies {
     api(libs.grpc.stub)
     api(libs.grpc.kotlin.stub)
     api(libs.grpc.protobuf)
+
+    api(platform(libs.spring.bom))
     api(libs.guava)
 
     api(platform(libs.kotlinx.coroutines.bom))

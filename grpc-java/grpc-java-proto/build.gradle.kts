@@ -13,11 +13,11 @@ dependencies {
     api(libs.grpc.api)
     api(libs.grpc.stub)
     api(libs.grpc.protobuf)
-    api(libs.guava)
 
     api(platform(libs.spring.bom))
     api(libs.reactor.core)
     api(libs.grpc.reactor.stub)
+    api(libs.guava)
 }
 
 protobuf {
