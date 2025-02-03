@@ -1,42 +1,35 @@
-import com.google.protobuf.gradle.id
-
 plugins {
     `java-library`
     alias(libs.plugins.protobuf)
 }
 
 dependencies {
-    api(platform(libs.protobuf.bom))
-    api(libs.protobuf.java)
-    api(libs.protobuf.kotlin)
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-core")
+    api("com.google.guava:guava")
 
-    api(platform(libs.grpc.bom))
-    api(libs.grpc.api)
-    api(libs.grpc.stub)
+    api("com.google.protobuf:protobuf-java")
+    api("com.google.protobuf:protobuf-kotlin")
+
+    api("io.grpc:grpc-api")
+    api("io.grpc:grpc-stub")
+    api("io.grpc:grpc-protobuf")
     api(libs.grpc.kotlin.stub)
-    api(libs.grpc.protobuf)
-
-    api(platform(libs.spring.bom))
-    api(libs.guava)
-
-    api(platform(libs.kotlinx.coroutines.bom))
-    api(libs.kotlinx.coroutines.core)
 }
 
 protobuf {
-    protoc { artifact = libs.protobuf.protoc.get().toString() }
+    protoc { artifact = "com.google.protobuf:protoc" }
     plugins {
-        id("grpc") { artifact = libs.grpc.protoc.gen.java.get().toString() }
-        id("grpckt") { artifact = "${libs.grpc.protoc.gen.kotlin.get()}:jdk8@jar" }
+        create("grpc") { artifact = "io.grpc:protoc-gen-grpc-java" }
+        create("grpckt") { artifact = "${libs.grpc.protoc.gen.kotlin.get()}:jdk8@jar" }
     }
     generateProtoTasks {
         all().forEach {
             it.plugins {
-                id("grpc")
-                id("grpckt")
+                create("grpc")
+                create("grpckt")
             }
             it.builtins {
-                id("kotlin")
+                create("kotlin")
             }
         }
     }

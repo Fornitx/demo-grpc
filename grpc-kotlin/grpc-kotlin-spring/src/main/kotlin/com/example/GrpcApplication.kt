@@ -5,9 +5,9 @@ import com.example.foo.bar.Greeter2GrpcKt
 import com.example.foo.bar.HelloReply
 import com.example.foo.bar.HelloRequest
 import kotlinx.coroutines.flow.Flow
-import net.devh.boot.grpc.server.service.GrpcService
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.grpc.server.service.GrpcService
 
 @SpringBootApplication
 class GrpcApplication

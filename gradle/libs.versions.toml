@@ -6,46 +6,24 @@
 
 mockito-kotlin = "5.4.0"
 
-protobuf = "4.29.3"
-grpc = "1.70.0"
-grpcReactor = "1.2.4"
-grpcKotlin = "1.4.1"
-grpcSpring = "3.1.0.RELEASE"
+grpc-core = "1.70.0"
+grpc-reactor = "1.2.4"
+grpc-kotlin = "1.4.1"
+grpc-spring = "0.3.0"
 
 [libraries]
-kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect" }
-kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5" }
-
-kotlinx-coroutines-bom = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom", version.ref = "kotlin-coroutines" }
-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test" }
-
 spring-bom = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
-reactor-core = { module = "io.projectreactor:reactor-core" }
 
-guava = { module = "com.google.guava:guava" }
+spring-grpc-bom = { module = "org.springframework.grpc:spring-grpc-dependencies", version.ref = "grpc-spring" }
+
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
 
-protobuf-bom = { module = "com.google.protobuf:protobuf-bom", version.ref = "protobuf" }
-protobuf-protoc = { module = "com.google.protobuf:protoc", version.ref = "protobuf" }
-protobuf-java = { module = "com.google.protobuf:protobuf-java" }
-protobuf-kotlin = { module = "com.google.protobuf:protobuf-kotlin" }
+grpc-protoc-gen-kotlin = { module = "io.grpc:protoc-gen-grpc-kotlin", version.ref = "grpc-kotlin" }
+grpc-kotlin-stub = { module = "io.grpc:grpc-kotlin-stub", version.ref = "grpc-kotlin" }
 
-grpc-bom = { module = "io.grpc:grpc-bom", version.ref = "grpc" }
-grpc-api = { module = "io.grpc:grpc-api" }
-grpc-stub = { module = "io.grpc:grpc-stub" }
-grpc-protobuf = { module = "io.grpc:grpc-protobuf" }
-grpc-netty-shaded = { module = "io.grpc:grpc-netty-shaded" }
-grpc-protoc-gen-java = { module = "io.grpc:protoc-gen-grpc-java", version.ref = "grpc" }
-
-grpc-protoc-gen-kotlin = { module = "io.grpc:protoc-gen-grpc-kotlin", version.ref = "grpcKotlin" }
-grpc-kotlin-stub = { module = "io.grpc:grpc-kotlin-stub", version.ref = "grpcKotlin" }
-
-grpc-reactor-plugin = { module = "com.salesforce.servicelibs:reactor-grpc", version.ref = "grpcReactor" }
+grpc-reactor-plugin = { module = "com.salesforce.servicelibs:reactor-grpc", version.ref = "grpc-reactor" }
 # TODO depends on "javax.annotation:javax.annotation-api"
-grpc-reactor-stub = { module = "com.salesforce.servicelibs:reactor-grpc-stub", version.ref = "grpcReactor" }
-
-grpc-spring-server = { module = "net.devh:grpc-server-spring-boot-starter", version.ref = "grpcSpring" }
+grpc-reactor-stub = { module = "com.salesforce.servicelibs:reactor-grpc-stub", version.ref = "grpc-reactor" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-lang" }

@@ -1,36 +1,32 @@
-import com.google.protobuf.gradle.id
-
 plugins {
     `java-library`
     alias(libs.plugins.protobuf)
 }
 
 dependencies {
-    api(platform(libs.protobuf.bom))
-    api(libs.protobuf.java)
+    api("io.projectreactor:reactor-core")
+    api("com.google.guava:guava")
 
-    api(platform(libs.grpc.bom))
-    api(libs.grpc.api)
-    api(libs.grpc.stub)
-    api(libs.grpc.protobuf)
-
-    api(platform(libs.spring.bom))
-    api(libs.reactor.core)
     api(libs.grpc.reactor.stub)
-    api(libs.guava)
+
+    api("com.google.protobuf:protobuf-java")
+
+    api("io.grpc:grpc-api")
+    api("io.grpc:grpc-stub")
+    api("io.grpc:grpc-protobuf")
 }
 
 protobuf {
-    protoc { artifact = libs.protobuf.protoc.get().toString() }
+    protoc { artifact = "com.google.protobuf:protoc" }
     plugins {
-        id("grpc") { artifact = libs.grpc.protoc.gen.java.get().toString() }
-        id("reactor") { artifact = libs.grpc.reactor.plugin.get().toString() }
+        create("grpc") { artifact = "io.grpc:protoc-gen-grpc-java" }
+        create("reactor") { artifact = libs.grpc.reactor.plugin.get().toString() }
     }
     generateProtoTasks {
-        ofSourceSet("main").forEach {
+        all().forEach {
             it.plugins {
-                id("grpc")
-                id("reactor")
+                create("grpc")
+                create("reactor")
             }
         }
     }
