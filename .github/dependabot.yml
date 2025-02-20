@@ -10,7 +10,7 @@ updates:
     schedule:
       interval: "daily"
     ignore:
-      - dependency-name: io.quarkus:quarkus-junit4-mock
+      - dependency-name: "io.quarkus:quarkus-junit4-mock"
         update-types: [ "version-update:semver-patch" ]
     assignees:
       - "Fornitx"
