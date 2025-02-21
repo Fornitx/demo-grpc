@@ -28,4 +28,4 @@ jobs:
         run: ldd --version
 
       - name: Gradle test
-        run: gradle test --show-version --no-daemon -Pkotlin-lang.version=2.1.10 -Pkotlin-logging.version=7.0.3 -Pspring-boot.version=3.4.2 -Pspring-dm.version=1.1.7 -Pkotlin-coroutines.version=1.10.1
+        run: gradle test --show-version --no-daemon -Pkotlin-lang.version=2.1.10 -Pkotlin-logging.version=7.0.4 -Pspring-boot.version=3.4.3 -Pspring-dm.version=1.1.7 -Pkotlin-coroutines.version=1.10.1

@@ -1,6 +1,5 @@
 plugins {
     java
-    id("org.gradlex.jvm-dependency-conflict-detection") version "2.1.2"
     alias(libs.plugins.spring.dm)
 }
 
@@ -11,8 +10,6 @@ val springGrpcBom = libs.spring.grpc.bom.get().toString()
 val grpcVersion = libs.versions.grpc.core.get().toString()
 
 allprojects {
-    apply(plugin = "org.gradlex.jvm-dependency-conflict-detection")
-
     group = "org.example"
     version = "1.0"
 
