@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.spring.dm)
 }
 
-val pluginId = libs.plugins.spring.dm.get().pluginId
 val springBom = libs.spring.bom.get().toString()
 val springGrpcBom = libs.spring.grpc.bom.get().toString()
 
@@ -18,7 +17,7 @@ allprojects {
 
 subprojects {
     apply(plugin = "java")
-    apply(plugin = pluginId)
+    apply(plugin = rootProject.libs.plugins.spring.dm.get().pluginId)
 
     ext["grpc.version"] = grpcVersion
 

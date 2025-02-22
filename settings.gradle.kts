@@ -14,22 +14,6 @@ dependencyResolutionManagement {
     }
 }
 
-buildscript {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.kordamp.gradle:enforcer-gradle-plugin:0.14.0")
-    }
-}
-
-apply(plugin = "org.kordamp.gradle.enforcer")
-
-configure<org.kordamp.gradle.plugin.enforcer.api.BuildEnforcerExtension> {
-//    rule(enforcer.rules.DependencyConvergence::class.java)
-}
-
 rootProject.name = "demo-grpc"
 
 include("common")
