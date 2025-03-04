@@ -7,8 +7,6 @@ import com.example.interceptors.HeaderServerInterceptor;
 import io.grpc.BindableService;
 import io.grpc.Channel;
 import io.grpc.ClientInterceptors;
-import io.grpc.ManagedChannel;
-import io.grpc.Server;
 import io.grpc.ServerInterceptors;
 import io.grpc.ServerServiceDefinition;
 import io.grpc.inprocess.InProcessChannelBuilder;
@@ -24,7 +22,7 @@ public class GrpcUtils {
     }
 
     public static CloseableServer startServer(BindableService service) throws IOException {
-        Server server = InProcessServerBuilder.forName(IN_PROCESS_NAME)
+        var server = InProcessServerBuilder.forName(IN_PROCESS_NAME)
             .directExecutor()
             .addService(interceptService(service))
             .build()
@@ -33,7 +31,7 @@ public class GrpcUtils {
     }
 
     public static CloseableChannel createChannel() {
-        ManagedChannel channel = InProcessChannelBuilder.forName(IN_PROCESS_NAME).directExecutor().build();
+        var channel = InProcessChannelBuilder.forName(IN_PROCESS_NAME).directExecutor().build();
         return new CloseableChannel(channel);
     }
 

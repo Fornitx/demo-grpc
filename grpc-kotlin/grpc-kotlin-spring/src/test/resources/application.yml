@@ -1,0 +1,13 @@
+server:
+  port: 0
+
+spring:
+  grpc:
+    server:
+      port: 0
+      servlet:
+        enabled: false
+      reactive:
+        enabled: false
+#    inprocess:
+#      enabled: true

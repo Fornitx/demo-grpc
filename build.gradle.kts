@@ -6,7 +6,7 @@ plugins {
 val springBom = libs.spring.bom.get().toString()
 val springGrpcBom = libs.spring.grpc.bom.get().toString()
 
-val grpcVersion = libs.versions.grpc.core.get().toString()
+//val grpcVersion = libs.versions.grpc.core.get().toString()
 
 allprojects {
     group = "org.example"
@@ -19,7 +19,7 @@ subprojects {
     apply(plugin = "java")
     apply(plugin = rootProject.libs.plugins.spring.dm.get().pluginId)
 
-    ext["grpc.version"] = grpcVersion
+//    ext["grpc.version"] = grpcVersion
 
     java {
         toolchain {

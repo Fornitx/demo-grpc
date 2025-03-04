@@ -13,27 +13,29 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Lazy
 import org.springframework.grpc.client.GrpcChannelFactory
-import org.springframework.grpc.test.AutoConfigureInProcessTransport
-import org.springframework.grpc.test.InProcessGrpcChannelFactory
+import org.springframework.grpc.client.NettyGrpcChannelFactory
+import org.springframework.grpc.test.LocalGrpcPort
 
 @SpringBootTest
-@AutoConfigureInProcessTransport
-class DemoApplicationTests {
+class DemoApplicationNettyTest {
     @TestConfiguration
     class TestListener {
         @Bean
-        fun stub1(channels: GrpcChannelFactory): Greeter1GrpcKt.Greeter1CoroutineStub {
-            if (channels is InProcessGrpcChannelFactory) {
-                return Greeter1GrpcKt.Greeter1CoroutineStub(channels.createChannel(null))
-            } else throw IllegalArgumentException("invalid GrpcChannelFactory type")
+        @Lazy
+        fun stub1(channels: GrpcChannelFactory, @LocalGrpcPort port : Int): Greeter1GrpcKt.Greeter1CoroutineStub {
+            if (channels is NettyGrpcChannelFactory) {
+                return Greeter1GrpcKt.Greeter1CoroutineStub(channels.createChannel("0.0.0.0:$port"))
+            } else throw IllegalArgumentException("invalid GrpcChannelFactory type ${channels::class.java}")
         }
 
         @Bean
-        fun stub2(channels: GrpcChannelFactory): Greeter2GrpcKt.Greeter2CoroutineStub {
-            if (channels is InProcessGrpcChannelFactory) {
-                return Greeter2GrpcKt.Greeter2CoroutineStub(channels.createChannel(null))
-            } else throw IllegalArgumentException("invalid GrpcChannelFactory type")
+        @Lazy
+        fun stub2(channels: GrpcChannelFactory, @LocalGrpcPort port : Int): Greeter2GrpcKt.Greeter2CoroutineStub {
+            if (channels is NettyGrpcChannelFactory) {
+                return Greeter2GrpcKt.Greeter2CoroutineStub(channels.createChannel("0.0.0.0:$port"))
+            } else throw IllegalArgumentException("invalid GrpcChannelFactory type ${channels::class.java}")
         }
     }
 

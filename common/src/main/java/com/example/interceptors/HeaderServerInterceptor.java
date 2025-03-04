@@ -20,12 +20,12 @@ public class HeaderServerInterceptor implements ServerInterceptor {
     ) {
         log("headers received from client: %s%n", requestHeaders);
 
-        String requestId = requestHeaders.get(REQUEST_ID_KEY);
+        var requestId = requestHeaders.get(REQUEST_ID_KEY);
         if (requestId == null) {
             return next.startCall(call, requestHeaders);
         }
 
-        Context context = Context.current().withValue(Headers.REQUEST_ID_CTX_KEY, requestId);
+        var context = Context.current().withValue(Headers.REQUEST_ID_CTX_KEY, requestId);
         return Contexts.interceptCall(context, new SimpleForwardingServerCall<>(call) {
             @Override
             public void sendHeaders(Metadata responseHeaders) {

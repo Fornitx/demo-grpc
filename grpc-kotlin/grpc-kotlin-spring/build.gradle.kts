@@ -6,10 +6,10 @@ plugins {
 ext["kotlin-coroutines.version"] = libs.versions.kotlin.coroutines.get()
 
 dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.grpc:spring-grpc-spring-boot-starter")
 
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 
     implementation(project(":common"))
     implementation(project(":grpc-kotlin:grpc-kotlin-proto"))
@@ -21,8 +21,12 @@ dependencies {
         exclude(group = "junit", module = "junit")
     }
 
+    testImplementation("io.projectreactor:reactor-test")
+
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
+
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.jar {
