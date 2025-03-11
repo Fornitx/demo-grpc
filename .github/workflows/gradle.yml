@@ -33,7 +33,7 @@ jobs:
           --show-version
           --no-daemon
           -Pkotlin-lang.version=2.1.10
-          -Pkotlin-logging.version=7.0.4
+          -Pkotlin-logging.version=7.0.5
           -Pspring-boot.version=3.4.3
           -Pspring-dm.version=1.1.7
           -Pkotlin-coroutines.version=1.10.1
