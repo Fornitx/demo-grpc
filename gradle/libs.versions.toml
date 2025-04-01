@@ -30,4 +30,4 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-lang" }
 kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin-lang" }
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 spring-dm = { id = "io.spring.dependency-management", version.ref = "spring-dm" }
-protobuf = { id = "com.google.protobuf", version = "0.9.4" }
+protobuf = { id = "com.google.protobuf", version = "0.9.5" }
