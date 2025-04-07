@@ -34,7 +34,7 @@ subprojects {
         }
     }
 
-    tasks.test {
+    tasks.withType<Test> {
         useJUnitPlatform()
     }
 }
