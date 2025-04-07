@@ -9,7 +9,7 @@ mockito-kotlin = "5.4.0"
 #grpc-core = "1.70.0"
 grpc-reactor = "1.2.4"
 grpc-kotlin = "1.4.1"
-grpc-spring = "0.5.0"
+grpc-spring = "0.6.0"
 
 [libraries]
 spring-bom = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
