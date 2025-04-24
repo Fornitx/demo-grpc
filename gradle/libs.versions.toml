@@ -8,7 +8,7 @@ mockito-kotlin = "5.4.0"
 
 #grpc-core = "1.70.0"
 grpc-reactor = "1.2.4"
-grpc-kotlin = "1.4.1"
+grpc-kotlin = "1.4.3"
 grpc-spring = "0.7.0"
 
 [libraries]
