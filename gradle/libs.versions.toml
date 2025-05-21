@@ -1,33 +1,31 @@
 [versions]
-#kotlin-lang = "2.1.0"
-#kotlin-coroutines = "1.9.0"
-#spring-boot = "3.4.0"
-#spring-dm = "1.1.6"
+spring-grpc = "0.8.0"
+reactor-grpc = "1.2.4"
+kotlin-grpc = "1.4.3"
 
 mockito-kotlin = "5.4.0"
-
-#grpc-core = "1.70.0"
-grpc-reactor = "1.2.4"
-grpc-kotlin = "1.4.3"
-grpc-spring = "0.8.0"
 
 [libraries]
 spring-bom = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
 
-spring-grpc-bom = { module = "org.springframework.grpc:spring-grpc-dependencies", version.ref = "grpc-spring" }
+spring-grpc-bom = { module = "org.springframework.grpc:spring-grpc-dependencies", version.ref = "spring-grpc" }
 
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
 
-grpc-protoc-gen-kotlin = { module = "io.grpc:protoc-gen-grpc-kotlin", version.ref = "grpc-kotlin" }
-grpc-kotlin-stub = { module = "io.grpc:grpc-kotlin-stub", version.ref = "grpc-kotlin" }
+grpc-protoc-gen-kotlin = { module = "io.grpc:protoc-gen-grpc-kotlin", version.ref = "kotlin-grpc" }
+grpc-kotlin-stub = { module = "io.grpc:grpc-kotlin-stub", version.ref = "kotlin-grpc" }
 
-grpc-reactor-plugin = { module = "com.salesforce.servicelibs:reactor-grpc", version.ref = "grpc-reactor" }
+grpc-reactor-plugin = { module = "com.salesforce.servicelibs:reactor-grpc", version.ref = "reactor-grpc" }
 # TODO depends on "javax.annotation:javax.annotation-api"
-grpc-reactor-stub = { module = "com.salesforce.servicelibs:reactor-grpc-stub", version.ref = "grpc-reactor" }
+grpc-reactor-stub = { module = "com.salesforce.servicelibs:reactor-grpc-stub", version.ref = "reactor-grpc" }
 
 [plugins]
-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-lang" }
-kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin-lang" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin1-lang" }
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin1-lang" }
+
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 spring-dm = { id = "io.spring.dependency-management", version.ref = "spring-dm" }
+
 protobuf = { id = "com.google.protobuf", version = "0.9.5" }
+
+mockito = { id = "com.bakdata.mockito", version = "1.9.1" }

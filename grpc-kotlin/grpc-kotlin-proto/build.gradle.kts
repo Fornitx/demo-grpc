@@ -13,7 +13,9 @@ dependencies {
     api("io.grpc:grpc-api")
     api("io.grpc:grpc-stub")
     api("io.grpc:grpc-protobuf")
-    api(libs.grpc.kotlin.stub)
+    api(libs.grpc.kotlin.stub) {
+        exclude(group = "javax.annotation")
+    }
 }
 
 protobuf {
@@ -25,7 +27,9 @@ protobuf {
     generateProtoTasks {
         all().forEach {
             it.plugins {
-                create("grpc")
+                create("grpc") {
+                    option("@generated=omit")
+                }
                 create("grpckt")
             }
             it.builtins {

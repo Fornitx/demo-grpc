@@ -7,7 +7,10 @@ dependencies {
     api("io.projectreactor:reactor-core")
     api("com.google.guava:guava")
 
-    api(libs.grpc.reactor.stub)
+    api(libs.grpc.reactor.stub) {
+//        TODO
+//        exclude(group = "javax.annotation")
+    }
 
     api("com.google.protobuf:protobuf-java")
 
@@ -25,8 +28,12 @@ protobuf {
     generateProtoTasks {
         all().forEach {
             it.plugins {
-                create("grpc")
-                create("reactor")
+                create("grpc") {
+                    option("@generated=omit")
+                }
+                create("reactor") {
+                    option("@generated=omit")
+                }
             }
         }
     }

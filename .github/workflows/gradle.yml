@@ -24,16 +24,12 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
-      - name: Print glibc version
-        run: ldd --version
-
       - name: Gradle test
         run: >-
           gradle test
           --show-version
           --no-daemon
-          -Pkotlin-lang.version=2.1.10
-          -Pkotlin-logging.version=7.0.5
-          -Pspring-boot.version=3.4.3
+          -Pkotlin1-lang.version=1.9.25
+          -Pkotlin1-logging.version=6.0.9
+          -Pspring-boot.version=3.4.5
           -Pspring-dm.version=1.1.7
-          -Pkotlin-coroutines.version=1.10.1

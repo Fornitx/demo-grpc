@@ -1,4 +1,6 @@
-val mockitoAgent = configurations.create("mockitoAgent")
+plugins {
+    alias(libs.plugins.mockito)
+}
 
 dependencies {
     implementation(project(":common"))
@@ -6,10 +8,4 @@ dependencies {
 
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.mockito:mockito-junit-jupiter")
-
-    mockitoAgent("org.mockito:mockito-core") { isTransitive = false }
-}
-
-tasks.withType<Test> {
-    jvmArgs("-javaagent:${mockitoAgent.asPath}")
 }

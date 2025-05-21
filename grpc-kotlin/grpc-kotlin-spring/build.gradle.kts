@@ -1,11 +1,9 @@
 plugins {
     alias(libs.plugins.kotlin.spring)
     alias(libs.plugins.spring.boot)
+
+    alias(libs.plugins.mockito)
 }
-
-ext["kotlin-coroutines.version"] = libs.versions.kotlin.coroutines.get()
-
-val mockitoAgent = configurations.create("mockitoAgent")
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
@@ -29,12 +27,6 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
-    mockitoAgent("org.mockito:mockito-core") { isTransitive = false }
-}
-
-tasks.withType<Test> {
-    jvmArgs("-javaagent:${mockitoAgent.asPath}")
 }
 
 tasks.jar {
