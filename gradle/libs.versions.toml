@@ -28,4 +28,4 @@ spring-dm = { id = "io.spring.dependency-management", version.ref = "spring-dm" 
 
 protobuf = { id = "com.google.protobuf", version = "0.9.5" }
 
-mockito = { id = "com.bakdata.mockito", version = "1.9.1" }
+mockito = { id = "com.bakdata.mockito", version = "1.10.0" }
