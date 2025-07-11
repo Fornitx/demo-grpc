@@ -3,9 +3,7 @@ package com.example
 import com.example.foo.bar.Greeter1GrpcKt
 import com.example.foo.bar.Greeter2GrpcKt
 import com.example.foo.bar.helloRequest
-import com.example.utils.TestUtils.MSG1
-import com.example.utils.TestUtils.MSG2
-import com.example.utils.TestUtils.MSG3
+import com.example.utils.TestUtils.*
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -15,7 +13,6 @@ import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Lazy
 import org.springframework.grpc.client.GrpcChannelFactory
-import org.springframework.grpc.client.NettyGrpcChannelFactory
 import org.springframework.grpc.test.LocalGrpcPort
 
 @SpringBootTest
@@ -25,17 +22,17 @@ class DemoApplicationNettyTest {
         @Bean
         @Lazy
         fun stub1(channels: GrpcChannelFactory, @LocalGrpcPort port : Int): Greeter1GrpcKt.Greeter1CoroutineStub {
-            if (channels is NettyGrpcChannelFactory) {
+//            if (channels is NettyGrpcChannelFactory) {
                 return Greeter1GrpcKt.Greeter1CoroutineStub(channels.createChannel("0.0.0.0:$port"))
-            } else throw IllegalArgumentException("invalid GrpcChannelFactory type ${channels::class.java}")
+//            } else throw IllegalArgumentException("invalid GrpcChannelFactory type ${channels::class.java}")
         }
 
         @Bean
         @Lazy
         fun stub2(channels: GrpcChannelFactory, @LocalGrpcPort port : Int): Greeter2GrpcKt.Greeter2CoroutineStub {
-            if (channels is NettyGrpcChannelFactory) {
+//            if (channels is NettyGrpcChannelFactory) {
                 return Greeter2GrpcKt.Greeter2CoroutineStub(channels.createChannel("0.0.0.0:$port"))
-            } else throw IllegalArgumentException("invalid GrpcChannelFactory type ${channels::class.java}")
+//            } else throw IllegalArgumentException("invalid GrpcChannelFactory type ${channels::class.java}")
         }
     }
 

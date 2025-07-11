@@ -3,9 +3,7 @@ package com.example
 import com.example.foo.bar.Greeter1GrpcKt
 import com.example.foo.bar.Greeter2GrpcKt
 import com.example.foo.bar.helloRequest
-import com.example.utils.TestUtils.MSG1
-import com.example.utils.TestUtils.MSG2
-import com.example.utils.TestUtils.MSG3
+import com.example.utils.TestUtils.*
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -15,7 +13,6 @@ import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.grpc.client.GrpcChannelFactory
 import org.springframework.grpc.test.AutoConfigureInProcessTransport
-import org.springframework.grpc.test.InProcessGrpcChannelFactory
 
 @SpringBootTest
 @AutoConfigureInProcessTransport
@@ -24,16 +21,16 @@ class DemoApplicationInProcessTest {
     class TestListener {
         @Bean
         fun stub1(channels: GrpcChannelFactory): Greeter1GrpcKt.Greeter1CoroutineStub {
-            if (channels is InProcessGrpcChannelFactory) {
+//            if (channels is InProcessGrpcChannelFactory) {
                 return Greeter1GrpcKt.Greeter1CoroutineStub(channels.createChannel(null))
-            } else throw IllegalArgumentException("invalid GrpcChannelFactory type ${channels::class.java}")
+//            } else throw IllegalArgumentException("invalid GrpcChannelFactory type ${channels::class.java}")
         }
 
         @Bean
         fun stub2(channels: GrpcChannelFactory): Greeter2GrpcKt.Greeter2CoroutineStub {
-            if (channels is InProcessGrpcChannelFactory) {
+//            if (channels is InProcessGrpcChannelFactory) {
                 return Greeter2GrpcKt.Greeter2CoroutineStub(channels.createChannel(null))
-            } else throw IllegalArgumentException("invalid GrpcChannelFactory type ${channels::class.java}")
+//            } else throw IllegalArgumentException("invalid GrpcChannelFactory type ${channels::class.java}")
         }
     }
 

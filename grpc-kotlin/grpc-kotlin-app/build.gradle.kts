@@ -11,4 +11,6 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.mockito:mockito-junit-jupiter")
     testImplementation(libs.mockito.kotlin)
+
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
