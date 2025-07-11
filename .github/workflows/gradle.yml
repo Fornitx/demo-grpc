@@ -31,5 +31,5 @@ jobs:
           --no-daemon
           -Pkotlin1-lang.version=1.9.25
           -Pkotlin1-logging.version=6.0.9
-          -Pspring-boot.version=3.4.5
+          -Pspring-boot.version=3.5.3
           -Pspring-dm.version=1.1.7
