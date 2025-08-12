@@ -19,7 +19,7 @@ jobs:
 
       - uses: actions/setup-java@v4
         with:
-          distribution: liberica
+          distribution: temurin
           java-version: 21
 
       - uses: gradle/actions/setup-gradle@v4
@@ -29,7 +29,8 @@ jobs:
           gradle test
           --show-version
           --no-daemon
-          -Pkotlin1-lang.version=1.9.25
-          -Pkotlin1-logging.version=6.0.9
-          -Pspring-boot.version=3.5.3
+          -Pkotlin2-lang.version=2.2.0
+          -Pkotlin2-coroutines.version=1.10.2
+          -Pkotlin2-logging.version=7.0.11
+          -Pspring-boot.version=3.5.4
           -Pspring-dm.version=1.1.7

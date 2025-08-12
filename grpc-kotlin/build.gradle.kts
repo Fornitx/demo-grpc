@@ -13,7 +13,7 @@ subprojects {
     }
 
     dependencies {
-        implementation("org.jetbrains.kotlin:kotlin-reflect:" + rootProject.libs.versions.kotlin1.lang.get())
+        implementation("org.jetbrains.kotlin:kotlin-reflect:" + rootProject.libs.versions.kotlin.lang.get())
     }
 }
 

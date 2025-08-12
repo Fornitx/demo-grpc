@@ -1,7 +1,3 @@
-plugins {
-    alias(libs.plugins.mockito)
-}
-
 dependencies {
     implementation(project(":common"))
     implementation(project(":grpc-kotlin:grpc-kotlin-proto"))

@@ -20,6 +20,8 @@ subprojects {
     apply(plugin = rootProject.libs.plugins.spring.dm.get().pluginId)
 
 //    ext["grpc.version"] = grpcVersion
+    ext["kotlin.version"] = rootProject.libs.versions.kotlin.lang.get()
+    ext["kotlin-coroutines.version"] = rootProject.libs.versions.kotlin.coroutines.get()
 
     java {
         toolchain {
@@ -34,7 +36,7 @@ subprojects {
         }
     }
 
-    tasks.withType<Test> {
+    tasks.test {
         useJUnitPlatform()
     }
 }

@@ -8,9 +8,6 @@ updates:
   - package-ecosystem: "gradle" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
-      interval: "daily"
-    ignore:
-      - dependency-name: "io.quarkus:quarkus-junit4-mock"
-        update-types: [ "version-update:semver-patch" ]
+      interval: "weekly"
     assignees:
       - "Fornitx"
