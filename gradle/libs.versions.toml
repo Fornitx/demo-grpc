@@ -1,5 +1,5 @@
 [versions]
-spring-grpc = "0.10.0"
+spring-grpc = "0.11.0"
 reactor-grpc = "1.2.4"
 kotlin-grpc = "1.4.3"
 
