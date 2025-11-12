@@ -8,12 +8,12 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.grpc.test.autoconfigure.LocalGrpcPort
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Lazy
 import org.springframework.grpc.client.GrpcChannelFactory
-import org.springframework.grpc.test.LocalGrpcPort
 
 @SpringBootTest
 class DemoApplicationNettyTest {
