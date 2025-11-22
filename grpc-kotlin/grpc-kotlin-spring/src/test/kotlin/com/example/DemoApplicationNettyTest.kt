@@ -14,25 +14,28 @@ import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Lazy
 import org.springframework.grpc.client.GrpcChannelFactory
+import org.springframework.grpc.client.NettyGrpcChannelFactory
 
-@SpringBootTest
+@SpringBootTest(properties = [
+    "spring.grpc.client.inprocess.enabled=false",
+])
 class DemoApplicationNettyTest {
     @TestConfiguration
     class TestListener {
         @Bean
         @Lazy
         fun stub1(channels: GrpcChannelFactory, @LocalGrpcPort port : Int): Greeter1GrpcKt.Greeter1CoroutineStub {
-//            if (channels is NettyGrpcChannelFactory) {
+            if (channels is NettyGrpcChannelFactory) {
                 return Greeter1GrpcKt.Greeter1CoroutineStub(channels.createChannel("0.0.0.0:$port"))
-//            } else throw IllegalArgumentException("invalid GrpcChannelFactory type ${channels::class.java}")
+            } else throw IllegalArgumentException("invalid GrpcChannelFactory type ${channels::class.java}")
         }
 
         @Bean
         @Lazy
         fun stub2(channels: GrpcChannelFactory, @LocalGrpcPort port : Int): Greeter2GrpcKt.Greeter2CoroutineStub {
-//            if (channels is NettyGrpcChannelFactory) {
+            if (channels is NettyGrpcChannelFactory) {
                 return Greeter2GrpcKt.Greeter2CoroutineStub(channels.createChannel("0.0.0.0:$port"))
-//            } else throw IllegalArgumentException("invalid GrpcChannelFactory type ${channels::class.java}")
+            } else throw IllegalArgumentException("invalid GrpcChannelFactory type ${channels::class.java}")
         }
     }
 

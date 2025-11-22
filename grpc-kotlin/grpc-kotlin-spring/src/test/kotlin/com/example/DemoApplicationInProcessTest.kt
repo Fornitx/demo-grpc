@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.grpc.client.GrpcChannelFactory
+import org.springframework.grpc.client.InProcessGrpcChannelFactory
 
 @SpringBootTest
 @AutoConfigureInProcessTransport
@@ -21,16 +22,16 @@ class DemoApplicationInProcessTest {
     class TestListener {
         @Bean
         fun stub1(channels: GrpcChannelFactory): Greeter1GrpcKt.Greeter1CoroutineStub {
-//            if (channels is InProcessGrpcChannelFactory) {
+            if (channels is InProcessGrpcChannelFactory) {
                 return Greeter1GrpcKt.Greeter1CoroutineStub(channels.createChannel(null))
-//            } else throw IllegalArgumentException("invalid GrpcChannelFactory type ${channels::class.java}")
+            } else throw IllegalArgumentException("invalid GrpcChannelFactory type ${channels::class.java}")
         }
 
         @Bean
         fun stub2(channels: GrpcChannelFactory): Greeter2GrpcKt.Greeter2CoroutineStub {
-//            if (channels is InProcessGrpcChannelFactory) {
+            if (channels is InProcessGrpcChannelFactory) {
                 return Greeter2GrpcKt.Greeter2CoroutineStub(channels.createChannel(null))
-//            } else throw IllegalArgumentException("invalid GrpcChannelFactory type ${channels::class.java}")
+            } else throw IllegalArgumentException("invalid GrpcChannelFactory type ${channels::class.java}")
         }
     }
 
