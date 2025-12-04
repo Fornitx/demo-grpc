@@ -23,14 +23,14 @@ class DemoApplicationInProcessTest {
         @Bean
         fun stub1(channels: GrpcChannelFactory): Greeter1GrpcKt.Greeter1CoroutineStub {
             if (channels is InProcessGrpcChannelFactory) {
-                return Greeter1GrpcKt.Greeter1CoroutineStub(channels.createChannel(null))
+                return Greeter1GrpcKt.Greeter1CoroutineStub(channels.createChannel("local"))
             } else throw IllegalArgumentException("invalid GrpcChannelFactory type ${channels::class.java}")
         }
 
         @Bean
         fun stub2(channels: GrpcChannelFactory): Greeter2GrpcKt.Greeter2CoroutineStub {
             if (channels is InProcessGrpcChannelFactory) {
-                return Greeter2GrpcKt.Greeter2CoroutineStub(channels.createChannel(null))
+                return Greeter2GrpcKt.Greeter2CoroutineStub(channels.createChannel("local"))
             } else throw IllegalArgumentException("invalid GrpcChannelFactory type ${channels::class.java}")
         }
     }
