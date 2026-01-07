@@ -3,9 +3,6 @@ plugins {
     alias(libs.plugins.spring.dm)
 }
 
-val springBom = libs.spring.bom.get().toString()
-val springGrpcBom = libs.spring.grpc.bom.get().toString()
-
 allprojects {
     group = "org.example"
     version = "1.0"
@@ -29,8 +26,8 @@ subprojects {
 
     dependencyManagement {
         imports {
-            mavenBom(springBom)
-            mavenBom(springGrpcBom)
+            mavenBom(rootProject.libs.spring.bom.get().toString())
+            mavenBom(rootProject.libs.spring.grpc.bom.get().toString())
         }
     }
 
