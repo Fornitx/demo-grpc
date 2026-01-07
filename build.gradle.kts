@@ -11,6 +11,10 @@ allprojects {
     version = "1.0"
 
     tasks.register<DependencyReportTask>("allDeps")
+
+    dependencyLocking {
+        lockAllConfigurations()
+    }
 }
 
 subprojects {
