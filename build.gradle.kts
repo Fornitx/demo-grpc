@@ -1,5 +1,6 @@
 plugins {
     java
+    alias(libs.plugins.spring.boot) apply false
     alias(libs.plugins.spring.dm)
 }
 
@@ -26,10 +27,12 @@ subprojects {
 
     dependencyManagement {
         imports {
-            mavenBom(rootProject.libs.spring.bom.get().toString())
+            mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
             mavenBom(rootProject.libs.spring.grpc.bom.get().toString())
         }
     }
+
+    ext["kotlin.version"] = rootProject.libs.versions.kotlin.lang.get()
 
     tasks.test {
         useJUnitPlatform()
