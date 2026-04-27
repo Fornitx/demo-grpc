@@ -33,6 +33,7 @@ subprojects {
     }
 
     ext["kotlin.version"] = rootProject.libs.versions.kotlin.lang.get()
+    ext["kotlin-coroutines.version"] = rootProject.libs.versions.kotlin.coroutines.get()
 
     tasks.test {
         useJUnitPlatform()

@@ -31,8 +31,8 @@ jobs:
           --no-daemon
           --parallel
           --write-locks
-          -Pkotlin-lang.version=2.3.0
-          -Pkotlin-coroutines.version=1.10.2
-          -Pkotlin-logging.version=7.0.14
-          -Pspring-boot.version=4.0.2
+          -Pkotlin-lang.version=2.4.0-Beta2
+          -Pkotlin-coroutines.version=1.11.0-rc01
+          -Pkotlin-logging.version=8.0.01
+          -Pspring-boot.version=4.1.0-RC1
           -Pspring-dm.version=1.1.7
